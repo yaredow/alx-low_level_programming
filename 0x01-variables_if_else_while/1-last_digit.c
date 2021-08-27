@@ -2,7 +2,9 @@
 #include <time.h>
 #include <stdio.h>
 /**
- * main: will assign a random to variable n
+ * main: Entry point
+ *
+ * Return: always 0 (success)
  */
 int main(void)
 {
