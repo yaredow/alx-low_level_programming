@@ -8,14 +8,14 @@
 
 int main(void)
 {
-	int i;
+	int i=0;
 	char p[] = "Holberton";
 
-	for (i = 0; i < 9; i++)
+	while  (i<=9)
 		{
 		_putchar(p[i]);
+		p[i]++;
 		}
-		_putchar('\n');
 	return (0);
 }
 
