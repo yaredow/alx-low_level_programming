@@ -1,26 +1,14 @@
-#include <main.h>
+#include "holberton.h"
 
 /**
-  * main- prints alphabet in lower case followed by new line
-  *
-  * Return: always 0
-  *
-  */
+ * print_alphabet - prints the alphabet in lowercase, followed by a new line.
+ */
+void print_alphabet(void)
+{
+	char letter;
 
-void ft_putchar(char c) { write(STDOUT_FILENO, &c, 1); }
+	for (letter = 'a'; letter <= 'z'; letter++)
+		_putchar(letter);
 
-void ft_print_alphabet(void) {
-  char letter;
-
-  letter = 'a';
-  while (letter <= 'z') {
-    ft_putchar(letter);
-    letter++;
-  }
+	_putchar('\n');
 }
-
-int main(void) {
-  ft_print_alphabet();
-  return 0;
-}
-
