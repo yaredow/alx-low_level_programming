@@ -1,4 +1,4 @@
-#include <main.c>
+#include <main.h>
 
 int _islower(int c)
 {
