@@ -1,23 +1,18 @@
-#include <main.h>
+#include "main.h"
 
 /**
- *
- * _isalpha - check weather input is alphabet or not 
- * Return: 1 for it is alphabet and 0 for it is not
- *
- */
-
+  * _isalpha - Checks for alphabetic character
+  * @c: The character to be checked
+  *
+  * Return: 1 for alphabetic character or 0 for anything else
+  */
 int _isalpha(int c)
 {
-	if ((c >= 'a' && c <= 'z' ) || (c >= 'A' && c <= 'Z'))
-{
-	return (1);
-}
-	else 
+	if ((c >= 65 && c <= 90) || (c >= 97 && c <= 122))
 	{
-		
-		return (0);
+		return (1);
 	}
-}
 
+	return (0);
+}
 
