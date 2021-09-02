@@ -1,4 +1,5 @@
 #include "main.h"
+#include <unistd.h>
 
 /**
   * _isupper - Check if a letter is upper
