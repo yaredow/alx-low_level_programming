@@ -1,25 +1,29 @@
 #include "main.h"
-
 /**
- * print_square - Prints a squareusing the character #.
- * @size: The size of the square.
+ * print_triangle - prints a triangle
+ *
+ * @size: sizexsize right triangle
+ *
+ * Return: always void
  */
-void print_square(int size)
+void print_triangle(int size)
 {
-	int hgt, wid;
+	int i, n, spaceC;
 
-	if (size > 0)
+	if (size < 1)
 	{
-		for (hgt = 0; hgt < size; hgt++)
-		{
-			for (wid = 0; wid < size; wid++)
-				_putchar('#');
-
-			if (hgt == size - 1)
-				continue;
-			_putchar('\n');
-		}
+		_putchar('\n');
+		return;
 	}
-
-	_putchar('\n');
+	i = 0;
+	spaceC = size - 1;
+	while (i < size)
+	{
+		n = 0;
+		while (n < size)
+			_putchar((n++ < spaceC) ? ' ' : '#');
+		_putchar('\n');
+		spaceC--;
+		i++;
+	}
 }
