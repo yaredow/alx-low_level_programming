@@ -1,26 +1,35 @@
-#include "main.h"
-
+#include "holberton.h"
+void print_unsigned_int(unsigned int n);
 /**
-  * print_number - print numbers chars
-  * @n: integer params
-  * Return: 0
- **/
-
+ * print_number - print number n with putchar
+ *
+ * @n: number to print
+ *
+ * Return: always void
+ */
 void print_number(int n)
 {
-	unsigned int n1;
-
-	n1 = n;
-
 	if (n < 0)
 	{
 		_putchar('-');
-		n1 = -n;
+		print_unsigned_int(-(unsigned int)n);
 	}
-
-	if (n1 / 10 != 0)
-	{
-		print_number(n1 / 10);
-	}
-	_putchar((n1 % 10) + '0');
+	else
+		print_unsigned_int(n);
 }
+/**
+ * print_unsigned_int - prints an unsigned integer
+ *
+ * @n: an unsigned integer to print
+ *
+ * Return: always void
+ */
+void print_unsigned_int(unsigned int n)
+{
+	if (n / 10 != 0)
+	{
+		print_unsigned_int(n / 10);
+	}
+	_putchar((n % 10) + '0');
+}
+
