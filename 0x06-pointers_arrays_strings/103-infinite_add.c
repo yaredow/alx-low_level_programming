@@ -1,85 +1,81 @@
-#define FILL 100 /* fill with 'd' */
-void move_int_end_to_beg(char *str, int size, char fill);
+#include "main.h"
+
+char *add_strings(char *n1, char *n2, char *r, int r_index);
+char *infinite_add(char *n1, char *n2, char *r, int size_r);
+
 /**
- * infinite_add - adds two numbers
+ * add_strings - Adds the numbers stored in two strings.
+ * @n1: The string containing the first number to be added.
+ * @n2: The string containing the second number to be added.
+ * @r: The buffer to store the result.
+ * @r_index: The current index of the buffer.
  *
- * @n1: *char - first number
- * @n2: *char - second number
- * @r:  *char - buffer where result is stored
- * @size_r: int - size of buffer
+ * Return: If r can store the sum - a pointer to the result.
+ *         If r cannot store the sum - 0.
+ */
+char *add_strings(char *n1, char *n2, char *r, int r_index)
+{
+	int num, tens = 0;
+
+	for (; *n1 && *n2; n1--, n2--, r_index--)
+	{
+		num = (*n1 - '0') + (*n2 - '0');
+		num += tens;
+		*(r + r_index) = (num % 10) + '0';
+		tens = num / 10;
+	}
+
+	for (; *n1; n1--, r_index--)
+	{
+		num = (*n1 - '0') + tens;
+		*(r + r_index) = (num % 10) + '0';
+		tens = num / 10;
+	}
+
+	for (; *n2; n2--, r_index--)
+	{
+		num = (*n2 - '0') + tens;
+		*(r + r_index) = (num % 10) + '0';
+		tens = num / 10;
+	}
+
+	if (tens && r_index >= 0)
+	{
+		*(r + r_index) = (tens % 10) + '0';
+		return (r + r_index);
+	}
+
+	else if (tens && r_index < 0)
+		return (0);
+
+	return (r + r_index + 1);
+}
+/**
+ * infinite_add - Adds two numbers.
+ * @n1: The first number to be added.
+ * @n2: The second number to be added.
+ * @r: The buffer to store the result.
+ * @size_r: The buffer size.
  *
- * Return: pointer to r
+ * Return: If r can store the sum - a pointer to the result.
+ *         If r cannot store the sum - 0.
  */
 char *infinite_add(char *n1, char *n2, char *r, int size_r)
 {
-	int tempSizeR = size_r;
-	int n1Length = 0, n2Length = 0, result = 0, carryStore = 0;
+	int index, n1_len = 0, n2_len = 0;
 
-	while (*(n1 + n1Length) != '\0')
-		n1Length++;
-	while (*(n2 + n2Length) != '\0')
-		n2Length++;
-	/* account for 9999, 1, size_r:4, and extra space needed for '\0' */
-	if (n1Length > size_r - 2 || n2Length > size_r - 2)
+	for (index = 0; *(n1 + index); index++)
+		n1_len++;
+
+	for (index = 0; *(n2 + index); index++)
+		n2_len++;
+
+	if (size_r <= n1_len + 1 || size_r <= n2_len + 1)
 		return (0);
-	n1Length--, n2Length--; /* set element behind null byte */
-	while (size_r >= 0)
-	{
-		if (size_r == tempSizeR)
-		{ /* set last byte to end of string char or 'null byte' */
-			r[size_r--] = '\0';
-			continue;
-		}
-		if (n1Length < 0 && n2Length < 0 && carryStore == 0)
-		{
-			r[size_r--] = FILL;
-			continue; /* fill in rest with constants's */
-		}
-		else if (n1Length < 0 && n2Length < 0 && carryStore != 0)
-			result = carryStore;
-		else if (n1Length < 0)
-			result = n2[n2Length] + carryStore - '0';
-		else if (n2Length < 0)
-			result = n1[n1Length] + carryStore - '0';
-		else /* normal case */
-		{
-			result = (n1[n1Length] - '0') + (n2[n2Length] - '0') + carryStore;
-		}
-		carryStore = 0;
-		if (result > 9)
-		{
-			carryStore = 1;
-			result = result - 10;
-		}
-		n1Length--, n2Length--;
-		r[size_r--] = result + '0';
-	}
-	move_int_end_to_beg(r, tempSizeR, FILL);
-	return (r);
-}
-/**
- * move_int_end_to_beg - moves integer from end of str to beginning
- *
- * @arr: string to change
- * @arrSize: size of string including null byte
- * @fillChar: character used to fill string that isn't part being moved
- *
- * Return: always void
- */
-void move_int_end_to_beg(char *arr, int arrSize, char fillChar)
-{
-	int i = 0;
-	int bufferPlacer = 0;
-	/* below loop moves elements to beginning of array */
-	while (i < arrSize)
-	{
-		if (arr[i] != fillChar)
-		{
-			arr[bufferPlacer++] = arr[i];
-			arr[i] = '\0';
-		}
-		else
-			arr[i] = '\0';
-		i++;
-	}
+
+	n1 += n1_len - 1;
+	n2 += n2_len - 1;
+	*(r + size_r) = '\0';
+
+	return (add_strings(n1, n2, r, --size_r));
 }
