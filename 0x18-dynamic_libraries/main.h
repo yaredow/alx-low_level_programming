@@ -28,4 +28,5 @@ int add(int a, b)
 int sub(int a, b)
 int mul(int a, b)
 int div(int a, b)
+int mod(int a, b)
 #endif
