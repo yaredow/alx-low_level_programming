@@ -1,3 +1,10 @@
+
+<p align="center">
+  <img
+    src="https://theme.zdassets.com/theme_assets/10239256/f69718478ae7ecaaae43d9f8aefd9638c313b55e.jpg"
+    alt="Holberton School logo">
+</p>
+
 ## Low-Level Programming
 
 This repository contains a list of low level programs written for ALX software engineering school. I have learned a lot of low level programming concepts so far. Below there are a list of projects:
