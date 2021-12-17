@@ -1,79 +1,53 @@
 #include "hash_tables.h"
 
 /**
- * hash_table_set - adds an element to table, checks first
- * @ht: the table
- * @key: the key
- * @value: the thing to add
- * Return: 1 on success, or 0 on fail
+ * hash_table_set - Add or update an element in a hash table.
+ * @ht: A pointer to the hash table.
+ * @key: The key to add - cannot be an empty string.
+ * @value: The value associated with key.
+ *
+ * Return: Upon failure - 0.
+ *         Otherwise - 1.
  */
 int hash_table_set(hash_table_t *ht, const char *key, const char *value)
 {
-	/* declarations */
-	hash_node_t *new, *head;
-	unsigned long int index;
+	hash_node_t *new;
+	char *value_copy;
+	unsigned long int index, i;
 
-	/* check for table, key, value */
-	if (!(ht && key && *key && value))
+	if (ht == NULL || key == NULL || *key == '\0' || value == NULL)
+		return (0);
+
+	value_copy = strdup(value);
+	if (value_copy == NULL)
 		return (0);
 
 	index = key_index((const unsigned char *)key, ht->size);
-	head = ht->array[index];
-	new = NULL;
-
-	/* look for place to add */
-	while (head)
+	for (i = index; ht->array[i]; i++)
 	{
-		if (!strcmp(key, head->key))
-		{	/* value must be duped */
-			char *newval = strdup(value);
-			/* check for bad value */
-			if (!newval)
-				return (0);
-			free(head->value);
-			head->value = newval;
+		if (strcmp(ht->array[i]->key, key) == 0)
+		{
+			free(ht->array[i]->value);
+			ht->array[i]->value = value_copy;
 			return (1);
 		}
-		head = head->next;
 	}
-	new = make_node(key, value);
-	/* check fail */
-	if (!new)
+
+	new = malloc(sizeof(hash_node_t));
+	if (new == NULL)
+	{
+		free(value_copy);
 		return (0);
+	}
+	new->key = strdup(key);
+	if (new->key == NULL)
+	{
+		free(new);
+		return (0);
+	}
+	new->value = value_copy;
 	new->next = ht->array[index];
 	ht->array[index] = new;
-	return (1);
-}
-/**
- * make_node - adds element to hash table/ chains
- * @key: where to add it
- * @value: what to add
- * Return: 1 on success, 0 otherwise
- */
-hash_node_t *make_node(const char *key, const char *value)
-{
-	/* declarations */
-	hash_node_t *new;
 
-	new = calloc(1, sizeof(hash_node_t));
-	/* if calloc fail */
-	if (!new)
-		return (0);
-	new->key = strdup(key);
-	/* if bad key */
-	if (!new->key)
-	{
-		free(new);
-		return (0);
-	}
-	new->value = strdup(value);
-	/* if bad thing */
-	if (!new->value)
-	{
-		free(new->key);
-		free(new);
-		return (0);
-	}
-	/* if all is well */
-	return (new);
+	return (1);
 }
