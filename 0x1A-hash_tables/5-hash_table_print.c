@@ -34,8 +34,3 @@ void hash_table_print(const hash_table_t *ht)
 	/* print closing brace & newline */
 	printf("}\n");
 }
-© 2021 GitHub, Inc.
-Terms
-Privacy
-Security
-
