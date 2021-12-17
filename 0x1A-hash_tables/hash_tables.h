@@ -47,7 +47,3 @@ void hash_table_delete(hash_table_t *ht);
 
 hash_node_t *make_node(const char *key, const char *value);
 #endif /* HASH_TABLES_H */
-© 2021 GitHub, Inc.
-Terms
-Privacy
-
